@@ -33,6 +33,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $foto
  * 
  * @property Collection|ArchivoUsuarioVerificador[] $archivo_usuario_verificadors
+ * @property Collection|Archivo[] $archivos
+ * @property Collection|Postulacione[] $postulaciones
+ * @property Collection|ServiciosSociale[] $servicios_sociales
  *
  * @package App\Models
  */
@@ -70,5 +73,20 @@ class User extends Model
 	public function archivo_usuario_verificadors()
 	{
 		return $this->hasMany(ArchivoUsuarioVerificador::class, 'usuario_verificador_id');
+	}
+
+	public function archivos()
+	{
+		return $this->hasMany(Archivo::class, 'usuario_id');
+	}
+
+	public function postulaciones()
+	{
+		return $this->hasMany(Postulacione::class, 'usuario_id');
+	}
+
+	public function servicios_sociales()
+	{
+		return $this->hasMany(ServiciosSociale::class, 'usuario_id');
 	}
 }

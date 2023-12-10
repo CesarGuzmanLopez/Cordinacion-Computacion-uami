@@ -34,7 +34,6 @@ return new class extends Migration
             $table->enum('estado', ['Pendiente', 'Aceptada', 'Rechazada'])->default('Pendiente');
             $table->boolean('Verificado')->default(false); // Nuevo campo para verificación por coordinador
             $table->timestamps();
-
             $table->foreign('servicio_social_id')->references('id')->on('servicios_sociales')->onDelete('cascade');
             $table->foreign('usuario_id')->references('id')->on('users')->onDelete('cascade');
         });
@@ -45,7 +44,6 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('ruta');
             $table->timestamps();
-
             $table->foreign('postulacion_id')->references('id')->on('postulaciones')->onDelete('cascade');
         });
     }

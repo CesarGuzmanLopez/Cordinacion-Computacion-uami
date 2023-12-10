@@ -17,6 +17,13 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        Schema::create('procesos', function (Blueprint $table) {
+            $table->id();
+            $table->date('fecha_inicio');
+            $table->date('fecha_termino');
+            $table->enum('estado', ['Activo', 'Cancelado'])->default('Activo');
+            $table->timestamps();
+        });
         Schema::create('archivos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('usuario_id');
@@ -31,25 +38,19 @@ return new class extends Migration
             $table->foreign('tipo_id')->references('id')->on('tipos_archivo')->onDelete('restrict');
             $table->foreign('proceso_id')->references('id')->on('procesos')->onDelete('set null');
         });
-
         Schema::create('archivo_usuario_verificador', function (Blueprint $table) {
             $table->unsignedBigInteger('archivo_id');
             $table->unsignedBigInteger('usuario_verificador_id');
             $table->enum('estado', ['No Verificado', 'Verificado'])->default('No Verificado');
             $table->timestamps();
-
             $table->primary(['archivo_id', 'usuario_verificador_id']);
             $table->foreign('archivo_id')->references('id')->on('archivos')->onDelete('cascade');
             $table->foreign('usuario_verificador_id')->references('id')->on('users')->onDelete('cascade');
         });
 
-        Schema::create('procesos', function (Blueprint $table) {
-            $table->id();
-            $table->date('fecha_inicio');
-            $table->date('fecha_termino');
-            $table->enum('estado', ['Activo', 'Cancelado'])->default('Activo');
-            $table->timestamps();
-        });
+
+
+
     }
 
     /**
