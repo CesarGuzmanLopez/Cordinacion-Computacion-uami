@@ -1,0 +1,10 @@
+¿Qué es una interfaz?
+Evitando Dependencias Circulares
+Una buena práctica es evitar dependencias circulares entre interfaces. Cuando dos o más interfaces dependen mutuamente una de la otra, puede complicar el diseño y aumentar la complejidad del código. Para evitar esto, se recomienda definir interfaces de manera que sean independientes entre sí y, si es necesario, agruparlas en una estructura de carpetas para organizarlas de manera clara.
+Implementación de Interfaces
+La implementación de una interfaz en una clase permite garantizar que la clase cumple con el contrato definido por la interfaz.
+Las interfaces se utilizan para definir contratos y para permitir la interoperabilidad entre diferentes clases. Esto facilita el diseño de software modular y extensible. Al utilizar interfaces, se promueve la reutilización de código y se simplifica el mantenimiento a largo plazo.
+Organización de Interfaces
+Si es necesario utilizar una interfaz en otra interfaz, se recomienda organizarlas en una estructura de carpetas.
+donde las interfaces mas generales se encuentran en la carpeta raíz y las interfaces mas especificas se encuentran en subcarpetas.
+no se podran llamar dos interfaces que esten en el mismo nivel de jerarquia

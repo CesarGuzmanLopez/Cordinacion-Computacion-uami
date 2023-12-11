@@ -1,0 +1,13 @@
+.hamburger-btn {
+  position: fixed;
+  top: 155px;
+  cursor: pointer;
+  z-index: 1000;
+  padding: 15px 30px 15px 15px;
+  border-radius: 0 10% 10% 0;
+  background-color: var(--ion-background-color-dark);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); /* Agregamos una sombra suave */
+  i {
+    color: white;
+  }
+}

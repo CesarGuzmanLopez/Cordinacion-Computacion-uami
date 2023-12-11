@@ -1,0 +1,168 @@
+<div class="ion-page" id="main-content">
+  <app-head [title]='"Registrar Nueva Cuenta "'></app-head>
+  <ion-content class="ion-padding">
+    <div class="principal-content">
+      <div *ngIf="waiting">
+        <app-complete-spinner></app-complete-spinner>
+      </div>
+      <ion-grid>
+        <ion-row>
+          <ion-col class="resgistrationText">
+            <p>Regístrate</p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="registrationInvitation">
+            <p>Ingresa tus datos</p>
+          </ion-col>
+        </ion-row>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <ion-row class="ion-justify-content-center">
+            <ion-col size="15" size-md="6">
+              <ion-item class="datos" [class.error]="isError('name')">
+                <ion-input
+                  class="datos"
+                  onkeyup="javascript:this.value=this.value.toUpperCase();"
+                  formControlName="name"
+                  label="Nombre"
+                  aria-label="Nombre"
+                  placeholder="Ingrese su nombre"
+                  labelPlacement="floating"
+                  required
+                >
+                </ion-input>
+              </ion-item>
+              <div *ngIf="isError('name')">
+                <app-input-error
+                  [messageError]='getErrorMessage("name")'
+                ></app-input-error>
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-justify-content-center">
+            <ion-col size="15" size-md="6">
+              <ion-item [class.error]="isError('firstLastName')">
+                <ion-input
+                  class="datos"
+                  onkeyup="javascript:this.value=this.value.toUpperCase();"
+                  placeholder="Ingrese su primer apellido"
+                  formControlName="firstLastName"
+                  label="Primer apellido"
+                  aria-label="Primer Apellido"
+                  labelPlacement="floating"
+                  required
+                ></ion-input>
+              </ion-item>
+              <div *ngIf="isError('firstLastName')">
+                <app-input-error
+                  [messageError]='getErrorMessage("firstLastName")'
+                ></app-input-error>
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-justify-content-center">
+            <ion-col size="15" size-md="6">
+              <ion-item [class.error]="isError('secondLastName')">
+                <ion-input
+                  class="datos"
+                  onkeyup="javascript:this.value=this.value.toUpperCase();"
+                  placeholder="Ingrese su segundo apellido"
+                  formControlName="secondLastName"
+                  label="Segundo apellido"
+                  aria-label="Segundo Apellido"
+                  labelPlacement="floating"
+                  required
+                ></ion-input>
+              </ion-item>
+              <div *ngIf="isError('secondLastName')">
+                <app-input-error
+                  [messageError]='getErrorMessage("secondLastName")'
+                ></app-input-error>
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-justify-content-center">
+            <ion-col class="resgistrationText-col" size="15" size-md="6">
+              <ion-item>
+                <ion-input
+                  class="datos"
+                  type="date"
+                  formControlName="birthday"
+                  label="Fecha de nacimiento"
+                  aria-label="Fecha de nacimiento "
+                  labelPlacement="floating"
+                  required
+                ></ion-input>
+                <span
+                  style="padding-top: 20px"
+                  class="iconoCalendario icon-calendario"
+                ></span>
+              </ion-item>
+              <div *ngIf="isError('birthday')">
+                <app-input-error
+                  [messageError]='getErrorMessage("birthday")'
+                ></app-input-error>
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-justify-content-center">
+            <ion-col size="15" size-md="6">
+              <ion-item>
+                <ion-input
+                  class="datos"
+                  formControlName="email"
+                  labelPlacement="floating"
+                  aria-label="Correo electrónico"
+                  label="Correo electrónico"
+                  required
+                ></ion-input>
+              </ion-item>
+              <div *ngIf="isError('email')">
+                <app-input-error
+                  [messageError]='getErrorMessage("email")'
+                ></app-input-error>
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-justify-content-center">
+            <ion-col size="15" size-md="6">
+              <ion-item>
+                <ion-input
+                  class="datos"
+                  formControlName="password"
+                  labelPlacement="floating"
+                  aria-label="Contraseña"
+                  label="Contraseña"
+                  type="password"
+                  required
+                ></ion-input>
+              </ion-item>
+              <div *ngIf="isError('password')">
+                <app-input-error
+                  [messageError]='getErrorMessage("password")'
+                ></app-input-error>
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <p class="leyendaObligatorios">
+                Todos los campos son obligatorios
+              </p>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-justify-content-center">
+            <ion-col size="7" size-md="6">
+              <ion-button
+                expand="block"
+                [disabled]="waiting || registerForm.invalid"
+                type="submit"
+                >Continuar</ion-button
+              >
+            </ion-col>
+          </ion-row>
+        </form>
+      </ion-grid>
+    </div>
+  </ion-content>
+</div>

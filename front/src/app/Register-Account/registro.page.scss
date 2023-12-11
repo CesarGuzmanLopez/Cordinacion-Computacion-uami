@@ -1,0 +1,43 @@
+.resgistration-button {
+  padding: auto;
+}
+.resgistrationText {
+  font-size: 25px;
+  text-align: center;
+  height: 45px;
+}
+.registrationInvitation {
+  font-size: 10px;
+  text-align: center;
+  color: #737373;
+}
+.resgistrationText-col {
+  text-align: left;
+}
+.datos {
+  color: #737373;
+  font-size: 12px;
+}
+.iconoCalendario {
+  font-size: 25px;
+}
+.leyendaObligatorios {
+  color: #737373;
+  font-size: 7px;
+  text-align: center;
+}
+.resgistrationContent {
+  ion-col {
+    background-color: #135d54;
+    border: solid 1px #fff;
+    color: #fff;
+    text-align: center;
+  }
+}
+.datatime-nacimiento {
+  display: inline;
+  padding-left: 30px;
+}
+ion-content {
+  --ion-background-color: #fff;
+}

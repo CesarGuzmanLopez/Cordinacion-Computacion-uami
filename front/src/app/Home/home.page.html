@@ -1,0 +1,87 @@
+<app-menu></app-menu>
+<div class="ion-page" appChangeFondo="'oscuro'" id="main-content">
+  <app-head [title]='"Sistema de Registro Universidad Autónoma Metropolitana"'></app-head>
+  <ion-content class="ion-padding" id="home-content">
+    <div class="principal-content">
+      <ion-grid>
+        <ion-row class="fila">
+          <ion-col class="columnaRegister" (click)="go('home/general-information')">
+            <div class="columnaIcono">
+              <span class="icon-informacion-general iconoRegister"></span>
+            </div>
+            <div class="textRegister">
+              <div>Información General</div>
+              <div class="textStatus">Completado</div>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row class="fila">
+          <ion-col class="columnaRegister" (click)="go('home/school-of-origin')">
+            <div class="columnaIcono">
+              <span class="icon-escuela-de-procedencia iconoRegister"></span>
+            </div>
+            <div class="columnaTexto textRegister">
+              <div>Escuela de Procedencia</div>
+              <div class="textStatus">Incompleto</div>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row class="fila">
+          <ion-col class="columnaRegister" (click)="go('home/academic-selection')">
+            <div class="columnaIcono">
+              <span class="icon-elección-académica iconoRegister"></span>
+            </div>
+            <div class="columnaTexto textRegister">
+              <div>Elección Académica</div>
+              <div class="textStatus">Incompleto</div>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row class="fila">
+          <ion-col class="columnaRegister" (click)="go('home/socioeconomic-information')">
+            <div class="columnaIcono">
+              <span class="icon-socioeconomico iconoRegister"></span>
+            </div>
+            <div class="columnaTexto textRegister">
+              <div>Socioeconómico</div>
+              <div class="textStatus">Incompleto</div>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row class="fila">
+          <ion-col class="columnaRegister" (click)="openModalCamera()">
+            <div class="columnaIcono">
+              <span class="icon-fotografiia iconoRegister"></span>
+            </div>
+            <div class="columnaTexto textRegister">
+              <div>Fotografía</div>
+              <div class="textStatus">Incompleto</div>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row class="fila">
+          <ion-col class="columnaRegister">
+            <div class="columnaIcono">
+              <span class="icon-pago-en-linea iconoRegister"></span>
+            </div>
+            <div class="columnaTexto textRegister">
+              <div>Pago</div>
+              <div class="textStatus">Incompleto</div>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row class="fila">
+          <ion-col class="columnaRegister">
+            <div class="columnaIcono">
+              <span class="icon-descargar-comprobante iconoRegister"></span>
+            </div>
+            <div class="columnaTexto textRegister">
+              <div>Comprobante</div>
+              <div class="textStatus">Incompleto</div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-content>
+</div>

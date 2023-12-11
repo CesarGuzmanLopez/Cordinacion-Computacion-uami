@@ -1,0 +1,30 @@
+.principal-content {
+  background-color: var(--ion-background-color-dark);
+  color: white;
+  text-align: center;
+}
+.icono {
+  background-color: white;
+  color: black;
+  padding: 1rem;
+  font-size: 37px;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+.columna {
+  padding-top: 1rem;
+  padding-bottom: 3rem;
+  cursor: pointer;
+}
+.icono-text {
+  margin-top: 2rem;
+  font-weight: normal;
+}
+.titulo-a {
+  font-size: 15px;
+  font-weight: normal;
+}
+.titulo-b {
+  font-size: 25px;
+  margin-bottom: 2rem;
+}

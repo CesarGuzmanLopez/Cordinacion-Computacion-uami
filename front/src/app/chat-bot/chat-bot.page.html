@@ -1,0 +1,41 @@
+<app-menu></app-menu>
+<div class="ion-page" id="main-content">
+  <app-head [title]='"ChatBot"'></app-head>
+  <ion-content class="ion-padding" id="home-content">
+    <div class="principal-content">
+      <div class="chat-container">
+        <div class="chat-bubble bot">
+          Hola, soy tu asistente virtual en el proceso de selección de la
+          Universidad Autónoma Metropolitana, ¿en qué puedo ayudarte?
+        </div>
+        <div
+          *ngFor="let mensaje of mensajes"
+          class="chat-bubble"
+          [ngClass]="{'bot': mensaje.esBot, 'user': !mensaje.esBot}"
+        >
+          {{ mensaje.texto }}
+        </div>
+      </div>
+      <div class="options">
+        <div
+          *ngFor="let opcion of opciones"
+          class="option"
+          (click)="seleccionarOpcion(opcion)"
+        >
+          {{ opcion.texto }}
+        </div>
+      </div>
+      <div class="input-container">
+        <input
+          [(ngModel)]="nuevoMensaje"
+          type="text"
+          placeholder="Escribe tu mensaje..."
+          (keyup.enter)="enviarMensaje()"
+        />
+        <button>
+          <ion-icon name="send" (click)="enviarMensaje()"></ion-icon>
+        </button>
+      </div>
+    </div>
+  </ion-content>
+</div>

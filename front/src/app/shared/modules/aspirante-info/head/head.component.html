@@ -1,0 +1,23 @@
+<div class="Aspirante" *ngIf="aspirante">
+  <div class="image-container">
+    <img
+      *ngIf="urlImage"
+      [src]="urlImage"
+      alt="imagen aspirante"
+      class="custom-image"
+    />
+  </div>
+  <div class="custom-label">
+    <h2 class="nombre">
+      {{ aspirante.nombre }} {{ aspirante.primer_apellido }}
+      {{ aspirante.segundo_apellido }}
+    </h2>
+    <div>
+      <strong>Fecha de Nacimiento:</strong> {{ aspirante.fecha_nacimiento }}
+    </div>
+    <div><strong>Correo:</strong> {{ aspirante.correo }}</div>
+    <div>
+      <strong>Control Asignado:</strong> {{ aspirante.controlAsignado }}
+    </div>
+  </div>
+</div>

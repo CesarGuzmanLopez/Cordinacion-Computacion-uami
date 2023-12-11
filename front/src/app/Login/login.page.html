@@ -1,0 +1,93 @@
+<div class="ion-page" id="main-content">
+  <app-head [dark]="true" [title]='"Iniciar sesión"'></app-head>
+  <ion-content class="ion-padding">
+    <div *ngIf="(waiting)">
+      <app-complete-spinner></app-complete-spinner>
+    </div>
+    <div class="principal-content">
+      <ion-grid>
+        <ion-row>
+          <ion-col class="loginTitle">
+            <p>Inicia sesión</p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="loginText">
+            <p>Ingresa tus datos de acceso</p>
+          </ion-col>
+        </ion-row>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <ion-row class="ion-justify-content-center">
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <span><ion-icon slot="start" name="mail"> </ion-icon></span>
+                <ion-input
+                  formControlName="email"
+                  labelPlacement="floating"
+                  aria-label="Correo electrónico"
+                  required
+                ></ion-input>
+              </ion-item>
+              <div *ngIf="isError('email')">
+                <app-input-error
+                  [messageError]='getMessageError("email")'
+                ></app-input-error>
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-justify-content-center">
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <span class="icono-contrasena icon-contrasena"></span>
+                <ion-input
+                  formControlName="password"
+                  labelPlacement="floating"
+                  type="password"
+                  aria-label="Contraseña"
+                  required
+                ></ion-input>
+              </ion-item>
+              <div *ngIf="isError('password')">
+                <app-input-error
+                  [messageError]='getMessageError("password")'
+                ></app-input-error>
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-justify-content-center">
+            <ion-col size="8" size-md="6">
+              <ion-button
+                type="submit"
+                expand="block"
+                [disabled]="!loginForm.valid || waiting"
+                >Entrar</ion-button
+              >
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="loginText">
+              <a (click)="go('reset-password')"
+                ><span
+                  slot="start"
+                  class="iconoRecuperarContrasena icon-olvidaste-la-contrasena"
+                ></span>
+                <p>¿Olvidaste tu contraseña?</p>
+              </a>
+            </ion-col>
+          </ion-row>
+        </form>
+        <ion-row>
+          <ion-col class="loginText">
+            <a
+              >¿No tienes una cuenta?<span
+                class="registrate"
+                routerLink="/register"
+                >Regístrate</span
+              ></a
+            >
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-content>
+</div>

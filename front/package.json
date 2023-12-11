@@ -22,15 +22,22 @@
     "@angular/platform-browser-dynamic": "^17.0.2",
     "@angular/router": "^17.0.2",
     "@capacitor/app": "5.0.6",
-    "@capacitor/core": "5.5.1",
+    "@capacitor/camera": "^5.0.7",
+    "@capacitor/core": "^5.5.1",
+    "@capacitor/filesystem": "^5.1.2",
     "@capacitor/haptics": "5.0.6",
+    "@capacitor/ios": "5.5.1",
     "@capacitor/keyboard": "5.0.6",
+    "@capacitor/preferences": "^5.0.6",
     "@capacitor/status-bar": "5.0.6",
     "@ionic/angular": "^7.0.0",
+    "@ionic/pwa-elements": "^3.2.2",
     "ionicons": "^7.0.0",
+    "jszip": "^3.10.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.14.2"
+    "uuid": "^9.0.1",
+    "zone.js": "~0.13.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.0.0",
@@ -58,6 +65,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "prettier": "^3.0.3",
     "ts-node": "^8.3.0",
     "typescript": "~5.2.2"
   },

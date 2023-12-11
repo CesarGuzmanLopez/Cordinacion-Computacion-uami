@@ -1,0 +1,21 @@
+.principal-content {
+  margin: 0rem 2rem;
+  @media screen and (min-width: 768px) {
+    width: 80%;
+    margin: 0 auto;
+  }
+  background-color: white;
+  padding: 2rem 2rem;
+  border-radius: 20px;
+}
+.disabled-section {
+  pointer-events: none; /* Deshabilita eventos del mouse */
+  opacity: 0.5; /* Reduce la opacidad de la sección deshabilitada */
+}
+.item,
+ion-label {
+  white-space: wrap;
+}
+ion-router-outlet {
+  --backgorund-color: trasparent;
+}

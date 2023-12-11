@@ -1,0 +1,21 @@
+// debe ocupar el 100% del ancho y alto de la pantalla y centrar el spinner y estar por encima de todo
+//debo poner un cuadro traslucido para que no se vea el fondo y que ocupe todo el ancho y alto de la pantalla
+ion-spinner {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+  z-index: 2;
+}
+ion-spiner::before {
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}

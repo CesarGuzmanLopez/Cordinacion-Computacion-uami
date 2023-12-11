@@ -1,0 +1,41 @@
+<div class="ion-page" id="main-content">
+  <app-head [title]='"Menu Sistema de registro"'></app-head>
+  <ion-content class="ion-padding" id="hoclearme-content">
+    <div class="principal-content">
+      <div class="titulo-a">La casa abierta al tiempo</div>
+      <div class="titulo-b">te da la bienvenida</div>
+      <ion-grid>
+        <ion-row>
+          <ion-col class="columna" (click)="navigateTo('/account')">
+            <span class="icon-usuario icono"></span>
+            <div class="icono-text">Mi cuenta</div>
+          </ion-col>
+          <ion-col class="columna" (click)="navigateTo('home')"
+            ><span class="icon-escuela-de-procedencia icono"></span>
+            <div class="icono-text">Registro</div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="columna" (click)="navigateTo('notifications')">
+            <span class="icon-notificacion icono"></span>
+            <div class="icono-text">Notificaciones</div>
+          </ion-col>
+          <ion-col class="columna" (click)="navigateTo('chat-bot')"
+            ><span class="icon-uamitochatbot2 icono"></span>
+            <div class="icono-text">ChatBot</div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="columna" (click)="navigateTo('privacy-policy')">
+            <span class="icon-privacidad icono"></span>
+            <div class="icono-text">Aviso de privacidad</div>
+          </ion-col>
+          <ion-col class="columna" (click)="logout()"
+            ><span class="icon-cerrar-sesion icono"></span>
+            <div class="icono-text">Cerrar sesión</div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-content>
+</div>

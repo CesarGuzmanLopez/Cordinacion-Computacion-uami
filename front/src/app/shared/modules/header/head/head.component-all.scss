@@ -1,0 +1,22 @@
+ion-header {
+  background-color: transparent;
+  background-image: none;
+  color: black;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  //centro todo el contenido del header
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  //le doy un alto al header
+  height: 20vh;
+  max-height: 55px;
+  min-height: 180px;
+}
+.logo {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  width: 100%;
+  max-width: 350px;
+  height: auto;
+}

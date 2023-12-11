@@ -1,0 +1,2 @@
+las funciones no llaman nada fuera de ellas mismas
+no llaman ni servicios ni modulos solo pueden usar el framework

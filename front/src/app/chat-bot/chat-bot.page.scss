@@ -1,0 +1,198 @@
+/* Estilo general */
+ion-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: larger;
+}
+#home-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.principal-content {
+  flex: 1;
+  max-width: 900px;
+  margin: auto;
+  background-color: rgba(95, 95, 95, 0.236);
+  border: 1px solid var(--ion-border-color);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+/* Estilos para el chat */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+.chat-bubble {
+  max-width: 70%;
+  margin: 10px /* Estilo general */ ion-content {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-size: larger;
+  }
+  #home-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Alinea el contenido en la parte inferior */
+  }
+  .principal-content {
+    flex: 1; /* Hace que este contenedor ocupe todo el espacio disponible en la columna */
+    max-width: 900px;
+    background-color: var(--ion-background-color);
+    border: 1px solid var(--ion-border-color);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background-color: rgba(95, 95, 95, 0.236);
+  }
+  /* Estilos para el chat */
+  .chat-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .chat-bubble {
+    max-width: 70%;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(108, 6, 6, 0.663);
+  }
+  .user {
+    background-color: var(
+      --ion-primary
+    ); /* Usar variable de color primario nativa */
+    color: var(--ion-text-color); /* Usar variable de color de texto nativa */
+    align-self: flex-end;
+  }
+  .bot {
+    background-color: var(
+      --ion-secondary
+    ); /* Usar variable de color de fondo nativa */
+    color: var(--ion-text-color); /* Usar variable de color de texto nativa */
+    align-self: flex-start;
+  }
+  /* Estilos para el campo de entrada y el botón de enviar */
+  .input-container {
+    display: flex;
+    margin-top: 10px;
+  }
+  input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid var(--ion-border-color); /* Usar variable de color de borde nativa */
+    border-radius: 5px;
+  }
+  button {
+    background-color: var(
+      --ion-primary
+    ); /* Usar variable de color primario nativa */
+    color: var(--ion-text-color); /* Usar variable de color de texto nativa */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+  button ion-icon {
+    font-size: 24px;
+  }
+  /* Estilos para las etiquetas de opciones */
+  .options {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Alinear las etiquetas a la derecha */
+    margin-top: 20px;
+  }
+  .option {
+    background-color: var(
+      --ion-secondary
+    ); /* Usar variable de color de fondo nativa */
+    color: var(--ion-text-color); /* Usar variable de color de texto nativa */
+    border: 1px solid var(--ion-border-color); /* Usar variable de color de borde nativa */
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px 0;
+    cursor: pointer;
+    max-width: 70%;
+    text-align: right; /* Alinear el texto a la derecha */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  .option:hover {
+    background-color: var(
+      --ion-secondary-shade
+    ); /* Cambiar el color de fondo al pasar el mouse */
+  }
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.user {
+  background-color: var(--ion-primary);
+  color: var(--ion-text-color);
+  align-self: flex-end;
+}
+.bot {
+  background-color: var(--ion-secondary);
+  color: var(--ion-text-color);
+  align-self: flex-start;
+}
+/* Estilos para el campo de entrada y el botón de enviar */
+.input-container {
+  display: flex;
+  margin-top: 10px;
+  background-color: var(--ion-background-color);
+  text-emphasis-color: var(--ion-text-color);
+}
+input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid var(--ion-border-color);
+  border-style: solid;
+  border-radius: 5px;
+  background-color: var(--ion-background-color);
+}
+button {
+  background-color: var(--ion-primary);
+  color: var(--ion-text-color);
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+button ion-icon {
+  font-size: 24px;
+}
+/* Estilos para las etiquetas de opciones */
+.options {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-top: 20px;
+}
+.option {
+  background-color: var(--ion-secondary);
+  color: var(--ion-text-color);
+  border: 1px solid var(--ion-border-color);
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  max-width: 70%;
+  text-align: right;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.option:hover {
+  background-color: var(--ion-secondary-shade);
+}
