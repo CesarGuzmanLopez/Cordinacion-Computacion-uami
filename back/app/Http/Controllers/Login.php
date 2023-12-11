@@ -10,7 +10,7 @@ class Login extends Controller
 {
     public function index()
     {
-        //averiguo si el usuario esta logeado
+        //averiguo si el usuario esta logeadss
         $user = Auth::user();
         $rol = "Invitado";
         if ($user) {
@@ -30,8 +30,6 @@ class Login extends Controller
      */
     public function Login(Request $request)
     {
-    // si la el email no es un correo busco la matricula en la base de datos y obtengo el cooreo
-    //para iniciar sesion
         if (!filter_var($request->email, FILTER_VALIDATE_EMAIL)) {
             $user = User::where('matricula', $request->email)->first();
             if ($user) {
@@ -54,6 +52,7 @@ class Login extends Controller
             return response()->json(['status'=> 'error', 'message'=> 'no se pudo iniciar session'],401);
         }
     }
+
     //obtengo rol y estado del usuario
     public function getRol(Request $request)
     {

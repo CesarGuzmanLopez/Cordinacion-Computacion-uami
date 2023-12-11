@@ -1,22 +1,21 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Preferences } from '@capacitor/preferences';
-import { Observable, lastValueFrom, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AppSession, Rol } from 'src/app/shared/Interfaces/app-session';
 import { environment } from 'src/environments/environment';
+import { HttpBack } from '../http/http.service';
 import { SessionResponse } from './contracts/login';
 @Injectable({
   providedIn: 'root',
 })
 export class AppSessionService {
   private url = environment.backUrl + '/login';
-  private urlToken = environment.backUrl + '/sanctum/csrf-cookie';
   private appSession?: AppSession;
 
   constructor(
     private router: Router,
-    private http: HttpClient,
+    private http: HttpBack,
   ) {
     this.loadAppSessionFromPreferences();
   }
@@ -25,17 +24,9 @@ export class AppSessionService {
   private noIsAuth: Observable<boolean> = of(!this.appSession?.token);
 
   public async getSessionhttp() {
-    const respones$ = lastValueFrom(
-      this.http.get<SessionResponse>(this.url + '/'),
-    );
-    const responesToken$ = lastValueFrom(this.http.get<string>(this.urlToken));
-    let tokenCSRF: string = '';
-    await responesToken$.then((next) => {
-      tokenCSRF = next;
-    });
+    const respones$ = this.http.requestGET<SessionResponse>('/login');
     await respones$.then((next) => {
       this.appSession = {
-        token: tokenCSRF,
         rol: next.rol,
         sessionState: this.isAuth,
         sessionStartTimestamp: new Date(),
@@ -54,9 +45,7 @@ export class AppSessionService {
     let haySession: boolean = !!this.appSession?.token;
     await this.loadAppSessionFromPreferences()
       .then(() => {
-        haySession =
-          !!this.appSession?.token && this.appSession?.rol !== Rol.Invitado;
-        console.log('token', this.appSession?.token);
+        haySession = this.appSession?.rol !== Rol.Invitado;
       })
       .catch((error) => {
         console.log(error);
@@ -71,45 +60,25 @@ export class AppSessionService {
    * @returns Promise<boolean> - Indicates if the login was successful.
    */
   public async login(email: string, password: string): Promise<boolean> {
-    //envio con el token csrf que esta guardadi en la session
-    const responesToken$ = lastValueFrom(this.http.get<string>(this.urlToken));
-    let tokenCSRF: string = '';
-    await responesToken$.then((next) => {
-      tokenCSRF = next;
-    });
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-csrf-token': tokenCSRF,
-    });
-    let body = { email: email, password: password };
-    console.log(body);
-
-    let respones$ = lastValueFrom(
-      this.http.post<SessionResponse>(this.url + '/', body, {
-        headers: headers,
-      }),
-    );
-    await respones$.then(
-      (next) => {
+    await this.http
+      .requestPOST<SessionResponse>(this.url, {
+        email: email,
+        password: password,
+      })
+      .then((next) => {
         this.appSession = {
-          token: tokenCSRF,
           rol: next.rol,
           sessionState: this.isAuth,
           sessionStartTimestamp: new Date(),
           sessionEndTimestamp: null,
           lastActionTimestamp: new Date(),
         };
+
         Preferences.set({
           key: 'appSession',
           value: JSON.stringify(this.appSession),
         });
-        Promise.resolve(true);
-      },
-      (error) => {
-        console.log(error);
-        Promise.reject(new Error('No se pudo iniciar sesión'));
-      },
-    );
+      });
     return true;
   }
 
