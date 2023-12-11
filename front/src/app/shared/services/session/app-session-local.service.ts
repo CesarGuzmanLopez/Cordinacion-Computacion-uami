@@ -4,35 +4,20 @@ import { Preferences } from '@capacitor/preferences';
 import { Observable, of } from 'rxjs';
 import { AppSession } from 'src/app/shared/Interfaces/app-session';
 import { SleepUtils } from 'src/app/shared/functions/sleep-utils';
+import { environment } from 'src/environments/environment';
 import { SessionUserNoAuthorizedException } from './app-session.exception';
 @Injectable({
   providedIn: 'root',
 })
 export class AppSessionService {
+  private url = environment.backUrl + '/webApps';
   private appSession?: AppSession;
   constructor(private router: Router) {
     this.loadAppSessionFromPreferences();
   }
   private isAuth: Observable<boolean> = of(!!this.appSession?.token);
   private noIsAuth: Observable<boolean> = of(!this.appSession?.token);
-  //declaro variables para pruebas en lo que se implementan los
-  // test end to end
-  // datos correctos
-  private email: string = 'admin@admin.com';
-  private password: string = 'admin123';
-  private token: string = 'da2ac8b0-6b1a-4c7e-8a7a-0d9a2a2c7a8a';
-  private sessionState: string = '';
-  private nombre: string = 'cesar';
-  private primer_apellido: string = 'Guzman';
-  private segundo_apellido: string = 'Lopez';
-  private fecha_nacimiento: string = '1990-01-01';
-  //datos  de usuario no permitido a registrarse
-  private nombre_no_permitido: string = 'cesar';
-  private primer_apellido_no_permitido: string = 'Gonzalez';
-  private segundo_apellido_no_permitido: string = 'Lopez';
-  private fecha_nacimiento_no_permitido: string = '1990-01-01';
-  //email de usuario no permitido a registrarse
-  private email_no_permitido: string = 'no@no.com';
+
   public async isAuthenticated(): Promise<boolean> {
     let haySession: boolean = !!this.appSession?.token;
     await this.loadAppSessionFromPreferences()
@@ -56,16 +41,12 @@ export class AppSessionService {
       return Promise.reject(new Error('A session is already active'));
     }
     let token: string = '';
-    // Simulate a login request
-    let salida: boolean = await SleepUtils.timeout(200);
-    if (salida && email === this.email && password === this.password) {
-      token = this.token;
-    }
+
     if (token === '') {
       return Promise.reject(new Error('Contraseña o correo incorrectos'));
     }
     this.appSession = {
-      token: this.token,
+      token: '' ,
       sessionState: this.isAuth,
       sessionStartTimestamp: new Date(),
       sessionEndTimestamp: null,
@@ -101,10 +82,7 @@ export class AppSessionService {
     });
   }
   public async ResetPassword(email: string, birthday: string) {
-    let salida: boolean = await SleepUtils.timeout(4000);
-    if (salida && email == this.email_no_permitido) {
-      throw new SessionUserNoAuthorizedException();
-    }
+
   }
   // Función para cargar la sesión desde Capacitor Preferences.
   private async loadAppSessionFromPreferences() {
