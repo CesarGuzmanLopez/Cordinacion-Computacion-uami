@@ -10,8 +10,16 @@ class Login extends Controller
 {
     public function index()
     {
-        //envio el codigo csrf para los formularios y codigo de conexion correcta
-        return response()->json(['status' => 'ok', 'csrf' => csrf_token()]);
+        //averiguo si el usuario esta logeado
+        $user = Auth::user();
+        $rol = "Invitado";
+        if ($user) {
+            $user = User::where('id', $user->id)->first();
+            $rol = $user->getRoleNames()->first();
+        }
+        //retorno ek rik del usuario y el token de la sesion
+        return response()->json(['status' => 'ok', 'rol' => $rol, 'token' => csrf_token()], 200);
+
     }
     //verifico si el usuario existe e inicio sesion si no regreso error de usuario o contraseña incorrecta
     //con error unhautorized 401 para que el front lo maneje

@@ -9,10 +9,10 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-
+use Spatie\Permission\Traits\HasRoles as SpatieHasRoles;
 /**
  * Class User
- * 
+ *
  * @property int $id
  * @property string $name
  * @property string $email
@@ -21,7 +21,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property string $rol
  * @property string|null $matricula
  * @property string|null $carrera
  * @property string|null $numero_empleado
@@ -31,7 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $ubicacion
  * @property string|null $horario
  * @property string|null $foto
- * 
+ *
  * @property Collection|ArchivoUsuarioVerificador[] $archivo_usuario_verificadors
  * @property Collection|Archivo[] $archivos
  * @property Collection|Postulacione[] $postulaciones
@@ -41,6 +40,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class User extends Model
 {
+    use SpatieHasRoles;
 	protected $table = 'users';
 
 	protected $casts = [
@@ -58,7 +58,6 @@ class User extends Model
 		'email_verified_at',
 		'password',
 		'remember_token',
-		'rol',
 		'matricula',
 		'carrera',
 		'numero_empleado',

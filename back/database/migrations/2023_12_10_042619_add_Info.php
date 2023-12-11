@@ -11,7 +11,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->enum('rol',["Alumno", "Profesor", "Cordinador","Sistema","Postulante" ,"Administrador" ])->default("Alumno");
             $table->string('matricula')->nullable(); // Para Alumno
             $table->string('carrera')->nullable(); // Para Alumno
             $table->string('numero_empleado')->nullable(); // Para Profesor y Coordinador
@@ -31,7 +30,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['rol', 'matricula', 'carrera', 'numero_empleado', 'departamento', 'telefono', 'extension', 'ubicacion', 'horario', 'foto']);
+            $table->dropColumn([ 'matricula', 'carrera', 'numero_empleado', 'departamento', 'telefono', 'extension', 'ubicacion', 'horario', 'foto']);
         });
     }
 };

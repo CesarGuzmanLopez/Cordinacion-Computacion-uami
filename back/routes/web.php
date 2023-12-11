@@ -13,4 +13,5 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/',[Login::class,'index']);
+Route::get('/login',[Login::class,'index']);
+Route::post('/login',[Login::class,'Login']);
