@@ -8,8 +8,12 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles as SpatieHasRoles;
+use Laravel\Sanctum\HasApiTokens;
+
 /**
  * Class User
  *
@@ -41,6 +45,7 @@ use Spatie\Permission\Traits\HasRoles as SpatieHasRoles;
 class User extends Model
 {
     use SpatieHasRoles;
+    use HasApiTokens, HasFactory, Notifiable;
 	protected $table = 'users';
 
 	protected $casts = [

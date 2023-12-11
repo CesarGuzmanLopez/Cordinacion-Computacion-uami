@@ -18,7 +18,7 @@ class Login extends Controller
             $rol = $user->getRoleNames()->first();
         }
         //retorno ek rik del usuario y el token de la sesion
-        return response()->json(['status' => 'ok', 'rol' => $rol, 'token' => csrf_token()], 200);
+        return response()->json(['status' => 'ok', 'rol' => $rol], 200);
 
     }
     //verifico si el usuario existe e inicio sesion si no regreso error de usuario o contraseña incorrecta
@@ -40,7 +40,6 @@ class Login extends Controller
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Usuario o contraseña incorrecta',
-                    'token' => csrf_token()
                 ], 401);
             }
         }

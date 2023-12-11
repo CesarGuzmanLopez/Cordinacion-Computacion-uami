@@ -1,28 +1,62 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Preferences } from '@capacitor/preferences';
-import { Observable, of } from 'rxjs';
-import { AppSession } from 'src/app/shared/Interfaces/app-session';
-import { SleepUtils } from 'src/app/shared/functions/sleep-utils';
+import { Observable, lastValueFrom, of } from 'rxjs';
+import { AppSession, Rol } from 'src/app/shared/Interfaces/app-session';
 import { environment } from 'src/environments/environment';
-import { SessionUserNoAuthorizedException } from './app-session.exception';
+import { SessionResponse } from './contracts/login';
 @Injectable({
   providedIn: 'root',
 })
 export class AppSessionService {
-  private url = environment.backUrl + '/webApps';
+  private url = environment.backUrl + '/login';
+  private urlToken = environment.backUrl + '/sanctum/csrf-cookie';
   private appSession?: AppSession;
-  constructor(private router: Router) {
+
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+  ) {
     this.loadAppSessionFromPreferences();
   }
+
   private isAuth: Observable<boolean> = of(!!this.appSession?.token);
   private noIsAuth: Observable<boolean> = of(!this.appSession?.token);
 
+  public async getSessionhttp() {
+    const respones$ = lastValueFrom(
+      this.http.get<SessionResponse>(this.url + '/'),
+    );
+    const responesToken$ = lastValueFrom(this.http.get<string>(this.urlToken));
+    let tokenCSRF: string = '';
+    await responesToken$.then((next) => {
+      tokenCSRF = next;
+    });
+    await respones$.then((next) => {
+      this.appSession = {
+        token: tokenCSRF,
+        rol: next.rol,
+        sessionState: this.isAuth,
+        sessionStartTimestamp: new Date(),
+        sessionEndTimestamp: null,
+        lastActionTimestamp: new Date(),
+      };
+
+      Preferences.set({
+        key: 'appSession',
+        value: JSON.stringify(this.appSession),
+      });
+      Promise.resolve(true);
+    });
+  }
   public async isAuthenticated(): Promise<boolean> {
     let haySession: boolean = !!this.appSession?.token;
     await this.loadAppSessionFromPreferences()
       .then(() => {
-        haySession = !!this.appSession?.token;
+        haySession =
+          !!this.appSession?.token && this.appSession?.rol !== Rol.Invitado;
+        console.log('token', this.appSession?.token);
       })
       .catch((error) => {
         console.log(error);
@@ -37,34 +71,49 @@ export class AppSessionService {
    * @returns Promise<boolean> - Indicates if the login was successful.
    */
   public async login(email: string, password: string): Promise<boolean> {
-    if (this.appSession?.token) {
-      return Promise.reject(new Error('A session is already active'));
-    }
-    let token: string = '';
+    //envio con el token csrf que esta guardadi en la session
+    const responesToken$ = lastValueFrom(this.http.get<string>(this.urlToken));
+    let tokenCSRF: string = '';
+    await responesToken$.then((next) => {
+      tokenCSRF = next;
+    });
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'x-csrf-token': tokenCSRF,
+    });
+    let body = { email: email, password: password };
+    console.log(body);
 
-    if (token === '') {
-      return Promise.reject(new Error('Contraseña o correo incorrectos'));
-    }
-    this.appSession = {
-      token: '' ,
-      sessionState: this.isAuth,
-      sessionStartTimestamp: new Date(),
-      sessionEndTimestamp: null,
-      lastActionTimestamp: new Date(),
-    };
-    try {
-      await Preferences.set({
-        key: 'appSession',
-        value: JSON.stringify(this.appSession),
-      });
-      return Promise.resolve(true);
-    } catch (error) {
-      return Promise.reject(error);
-    }
+    let respones$ = lastValueFrom(
+      this.http.post<SessionResponse>(this.url + '/', body, {
+        headers: headers,
+      }),
+    );
+    await respones$.then(
+      (next) => {
+        this.appSession = {
+          token: tokenCSRF,
+          rol: next.rol,
+          sessionState: this.isAuth,
+          sessionStartTimestamp: new Date(),
+          sessionEndTimestamp: null,
+          lastActionTimestamp: new Date(),
+        };
+        Preferences.set({
+          key: 'appSession',
+          value: JSON.stringify(this.appSession),
+        });
+        Promise.resolve(true);
+      },
+      (error) => {
+        console.log(error);
+        Promise.reject(new Error('No se pudo iniciar sesión'));
+      },
+    );
+    return true;
   }
 
   public async closeAppSession() {
-    console.log('closeAppSession');
     let salid1 = Preferences.remove({ key: 'appSession' });
     let aslid2 = Preferences.remove({ key: 'tokenFirebase' });
     await Promise.all([salid1, aslid2])
@@ -75,17 +124,17 @@ export class AppSessionService {
         throw new Error('No se pudo cerrar la sesión' + error);
       });
   }
+
   public async setTokenFirebase(token: string) {
     return Preferences.set({
       key: 'tokenFirebase',
       value: token,
     });
   }
-  public async ResetPassword(email: string, birthday: string) {
-
-  }
+  public async ResetPassword(email: string, birthday: string) {}
   // Función para cargar la sesión desde Capacitor Preferences.
   private async loadAppSessionFromPreferences() {
+    await this.getSessionhttp();
     await Preferences.get({ key: 'appSession' }).then((result) => {
       if (result.value) {
         this.appSession = JSON.parse(result.value);
