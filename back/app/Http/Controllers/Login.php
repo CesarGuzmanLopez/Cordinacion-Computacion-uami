@@ -30,6 +30,7 @@ class Login extends Controller
      */
     public function Login(Request $request)
     {
+
         if (!filter_var($request->email, FILTER_VALIDATE_EMAIL)) {
             $user = User::where('matricula', $request->email)->first();
             if ($user) {
@@ -46,26 +47,16 @@ class Login extends Controller
             $request->session()->regenerate();
             $user = Auth::user();
             $user = User::where('id', $user->id)->first();
-            $rol = $user->rol;
-            return response()->json(['status' => 'ok', 'rol'=> $rol ], 200);
+            $rol = Auth::user()->getRoleNames()->first();
+            // obtenemos el token para el usuario
+            $token = $user->createToken('authToken')->plainTextToken;
+            // retornamos el token y el rol del usuario
+            return response()->json(['status' => 'ok', 'token' => $token, 'rol' => $rol], 200);
         } else {
             return response()->json(['status'=> 'error', 'message'=> 'no se pudo iniciar session'],401);
         }
     }
 
-    //obtengo rol y estado del usuario
-    public function getRol(Request $request)
-    {
-
-        $user = Auth::user();
-        if (!$user) {
-            return response()->json(['status' => 'error', 'message' => 'Sesion no iniciada'], 401);
-        }
-        $user = User::where('id', $user->id)->first();
-        $rol = $user->rol;
-        $estado = $user->estado;
-        return response()->json(['status' => 'ok', 'rol' => $rol, 'estado' => $estado], 200);
-    }
     //cierro sesion
     public function logout(Request $request)
     {

@@ -11,14 +11,11 @@ export class HttpBack {
   private url = environment.backUrl;
   private urlToken = environment.backUrl + '/sanctum/csrf-cookie';
 
-  public requestGET<T>(url: string): Promise<T> {
+  public async requestGET<T>(url: string): Promise<T> {
     const respones$ = lastValueFrom(this.http.get<T>(this.url + url));
     return respones$;
   }
-  public requestPOST<T>(url: string, body: any): Promise<T> {
-    this.http.get(this.urlToken);
-    //obtengo el token
-    lastValueFrom(this.http.get(this.urlToken));
+  public async requestPOST<T>(url: string, body: any): Promise<T> {
     return lastValueFrom(this.http.post<T>(this.url + url, body));
   }
 }

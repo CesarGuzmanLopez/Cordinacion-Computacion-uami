@@ -3,14 +3,13 @@ import { Router } from '@angular/router';
 import { Preferences } from '@capacitor/preferences';
 import { Observable, of } from 'rxjs';
 import { AppSession, Rol } from 'src/app/shared/Interfaces/app-session';
-import { environment } from 'src/environments/environment';
 import { HttpBack } from '../http/http.service';
 import { SessionResponse } from './contracts/login';
 @Injectable({
   providedIn: 'root',
 })
 export class AppSessionService {
-  private url = environment.backUrl + '/login';
+  private url = '/login';
   private appSession?: AppSession;
 
   constructor(
@@ -24,16 +23,16 @@ export class AppSessionService {
   private noIsAuth: Observable<boolean> = of(!this.appSession?.token);
 
   public async getSessionhttp() {
-    const respones$ = this.http.requestGET<SessionResponse>('/login');
-    await respones$.then((next) => {
+    const respones$ = this.http.requestGET<SessionResponse>(this.url);
+    await respones$.then((session) => {
       this.appSession = {
-        rol: next.rol,
+        rol: session.rol,
         sessionState: this.isAuth,
         sessionStartTimestamp: new Date(),
         sessionEndTimestamp: null,
         lastActionTimestamp: new Date(),
       };
-
+      console.log(this.appSession);
       Preferences.set({
         key: 'appSession',
         value: JSON.stringify(this.appSession),
@@ -78,6 +77,7 @@ export class AppSessionService {
           key: 'appSession',
           value: JSON.stringify(this.appSession),
         });
+        console.log(this.appSession);
       });
     return true;
   }
