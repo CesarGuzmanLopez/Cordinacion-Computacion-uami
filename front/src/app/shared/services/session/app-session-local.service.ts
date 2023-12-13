@@ -27,6 +27,7 @@ export class AppSessionService {
     await respones$.then((session) => {
       this.appSession = {
         rol: session.rol,
+        token: session.token,
         sessionState: this.isAuth,
         sessionStartTimestamp: new Date(),
         sessionEndTimestamp: null,
@@ -67,6 +68,7 @@ export class AppSessionService {
       .then((next) => {
         this.appSession = {
           rol: next.rol,
+          token: next.token,
           sessionState: this.isAuth,
           sessionStartTimestamp: new Date(),
           sessionEndTimestamp: null,

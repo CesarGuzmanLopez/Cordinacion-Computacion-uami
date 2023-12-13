@@ -15,13 +15,12 @@ class Cors
      */
     public function handle(Request $request, Closure $next): Response
     {
-//
+        return $next($request)->headers("Access-Control-Allow-Credentials", "true")
+        ->header('Access-Control-Allow-Origin', env('APP_URL'))
+        ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS PATCH')
+        ->header('Access-Control-Allow-Headers', '*')
+        ->header('Access-Control-Expose-Headers', '*')
+        ->header('Access-Control-Allow-Credentials', 'true');
 
-//Just add x-csrf-token header to allowed list. In your case, it's in Cors.php file, header Access-Control-Allow-Headers.
-
-
-        return $next($request)->header('Access-Control-Allow-Origin', '*')
-        ->header('Access-Control-Allow-Methods','*')
-        ->header('Access-Control-Allow-Headers', '*');
     }
 }

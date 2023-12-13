@@ -7,5 +7,6 @@ export interface LoginSend {
 
 export interface SessionResponse {
   status: string;
+  token: string;
   rol: Rol;
 }

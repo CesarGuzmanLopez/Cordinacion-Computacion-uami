@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
@@ -23,8 +22,8 @@ class DatabaseSeeder extends Seeder
         //Creo al usuario Administrador
         $nuevoUsuario = new User();
         $nuevoUsuario->name = 'Administrador';
-        $nuevoUsuario->email = '88-8@live.com.mx';
-        $nuevoUsuario->password = bcrypt('12345678');
+        $nuevoUsuario->email = 'admin@admin.com';
+        $nuevoUsuario->password = bcrypt('admin123');
         $nuevoUsuario->save();
         $nuevoUsuario->assignRole('Administrador');
         $nuevoUsuario->save();

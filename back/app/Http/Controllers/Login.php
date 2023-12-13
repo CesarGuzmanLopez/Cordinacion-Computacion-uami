@@ -8,17 +8,21 @@ use Illuminate\Support\Facades\Auth;
 
 class Login extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        //averiguo si el usuario esta logeadss
+       //obtengo el token de la session y verifico si el usuario esta logeado
+       //devuelvo el token y el usuiario
+        //inicio la sessio con sanctum
         $user = Auth::user();
+
         $rol = "Invitado";
-        if ($user) {
+        $token = null;
+        if($user){
             $user = User::where('id', $user->id)->first();
-            $rol = $user->getRoleNames()->first();
+            $rol = Auth::user()->getRoleNames()->first();
+            $token = $user->createToken('authToken')->plainTextToken;
         }
-        //retorno ek rik del usuario y el token de la sesion
-        return response()->json(['status' => 'ok', 'rol' => $rol], 200);
+        return response()->json(['status' => 'ok', 'token' => $token, 'rol' => $rol  ], 200);
 
     }
     //verifico si el usuario existe e inicio sesion si no regreso error de usuario o contraseña incorrecta
@@ -44,7 +48,6 @@ class Login extends Controller
         }
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
             $user = Auth::user();
             $user = User::where('id', $user->id)->first();
             $rol = Auth::user()->getRoleNames()->first();
