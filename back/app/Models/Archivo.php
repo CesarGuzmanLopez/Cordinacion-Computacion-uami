@@ -7,7 +7,6 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -23,10 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Proceso|null $proceso
- * @property TiposArchivo $tipos_archivo
  * @property User $user
- * @property Collection|ArchivoUsuarioVerificador[] $archivo_usuario_verificadors
  *
  * @package App\Models
  */
@@ -49,23 +45,8 @@ class Archivo extends Model
 		'proceso_id'
 	];
 
-	public function proceso()
-	{
-		return $this->belongsTo(Proceso::class);
-	}
-
-	public function tipos_archivo()
-	{
-		return $this->belongsTo(TiposArchivo::class, 'tipo_id');
-	}
-
 	public function user()
 	{
 		return $this->belongsTo(User::class, 'usuario_id');
-	}
-
-	public function archivo_usuario_verificadors()
-	{
-		return $this->hasMany(ArchivoUsuarioVerificador::class);
 	}
 }

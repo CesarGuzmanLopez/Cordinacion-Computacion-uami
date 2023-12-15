@@ -1,6 +1,9 @@
 <?php
 
 namespace Database\Seeders;
+use App\Models\ArchivoProceso;
+use App\Models\TipoProceso;
+use App\Models\TiposArchivo;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
@@ -52,5 +55,27 @@ class DatabaseSeeder extends Seeder
         // Asigno roles según tus necesidades al usuario del sistema
         $sistema->assignRole(['Administrador', 'Coordinador']);
         $sistema->save();
+     // Crear tipos de proceso
+
+        $proceso = new TipoProceso();
+        $proceso->nombre = 'Servicio Social';
+        $proceso->tiempo = 10;
+        $proceso->save();
+
+        // Crear tipos de archivos
+        $tiposArchivos = ['Reporte preliminar de proyecto', 'Comprobante de créditos', 'Carta de Aceptación', 'Formato de Servicio Social'];
+        foreach ($tiposArchivos as $tipoArchivo) {
+            $tipo = new TiposArchivo();
+            $tipo->nombre = $tipoArchivo;
+            $tipo->save();
+            $archivoProceso = new ArchivoProceso();
+            $archivoProceso->tipo_archivo_id = $tipo->id;
+            $archivoProceso->tipo_proceso_id = $proceso->id;
+            $archivoProceso->save();
+        }
+
+
+
+
     }
 }

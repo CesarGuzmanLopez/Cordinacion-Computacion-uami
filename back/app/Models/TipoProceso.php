@@ -10,20 +10,26 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class TiposArchivo
+ * Class TipoProceso
  * 
  * @property int $id
  * @property string $nombre
+ * @property int $tiempo
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  *
  * @package App\Models
  */
-class TiposArchivo extends Model
+class TipoProceso extends Model
 {
-	protected $table = 'Tipos_archivo';
+	protected $table = 'Tipo_proceso';
+
+	protected $casts = [
+		'tiempo' => 'int'
+	];
 
 	protected $fillable = [
-		'nombre'
+		'nombre',
+		'tiempo'
 	];
 }
