@@ -14,3 +14,9 @@ use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/login',[Login::class,'index']);
+
+
+Route::post('/login',[Login::class,'Login']);
+
+Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'show']);

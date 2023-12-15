@@ -68,4 +68,7 @@ class Login extends Controller
         $request->session()->regenerateToken();
         return response()->json(['status' => 'ok'], 200);
     }
+
+
+
 }

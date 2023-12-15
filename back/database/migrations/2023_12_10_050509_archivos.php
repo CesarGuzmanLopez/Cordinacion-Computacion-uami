@@ -47,6 +47,15 @@ return new class extends Migration
             $table->foreign('archivo_id')->references('id')->on('archivos')->onDelete('cascade');
             $table->foreign('usuario_verificador_id')->references('id')->on('users')->onDelete('cascade');
         });
+        //archivos necesaios por procesos relacion archivos procesos
+        Schema::create('archivo_proceso', function (Blueprint $table) {
+            $table->unsignedBigInteger('archivo_id');
+            $table->unsignedBigInteger('proceso_id');
+            $table->timestamps();
+            $table->primary(['archivo_id', 'proceso_id']);
+            $table->foreign('archivo_id')->references('id')->on('archivos')->onDelete('cascade');
+            $table->foreign('proceso_id')->references('id')->on('procesos')->onDelete('cascade');
+        });
 
 
 
@@ -58,6 +67,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('archivo_proceso');
         Schema::dropIfExists('archivo_usuario_verificador');
         Schema::dropIfExists('archivos');
         Schema::dropIfExists('procesos');
