@@ -135,7 +135,7 @@ export class LoginPage implements OnInit {
       .login(email, password)
       .then((values) => {
         this.loginForm.reset();
-        //window.location.href = '/home';
+        window.location.href = '/home';
       })
       .catch((error) => {
         return Promise.reject(new LoginBadEntryError(error));

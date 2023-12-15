@@ -1,38 +1,59 @@
-import { HttpClient } from '@angular/common/http';
+// http-back.service.ts
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
+
 @Injectable({
   providedIn: 'root',
 })
 export class HttpBack {
+  private authToken: string | null = null;
+
   constructor(private http: HttpClient) {}
-  //variables de entorno
+
   private url = environment.backUrl;
   private urlToken = environment.backUrl + '/sanctum/csrf-cookie';
-  public TimeOut: number = 60000;
+
+  // Actualiza el token de autenticación
+  public updateAuthToken(token: string | null): void {
+    this.authToken = token;
+  }
+
+  // Genera las opciones HTTP, incluyendo el token de autorización si está disponible
+  private getHttpOptions() {
+    let headers = new HttpHeaders({
+      // ... cualquier otra cabecera que necesites
+    });
+
+    if (this.authToken) {
+      headers = headers.append('Authorization', `Bearer ${this.authToken}`);
+    }
+
+    return {
+      headers: headers,
+      withCredentials: true, // Añadir withCredentials a las opciones
+    };
+  }
+
+  // Obtiene el token CSRF y luego ejecuta la solicitud HTTP
+  private async fetchCsrfToken(): Promise<void> {
+    await lastValueFrom(this.http.get(this.urlToken, this.getHttpOptions()));
+  }
+
   public async requestGET<T>(url: string): Promise<T> {
-    let regreso!: Promise<T>;
-    this.http.get<T>(this.urlToken).subscribe(() => {
-      regreso = lastValueFrom(this.http.get<T>(this.url + url));
-    });
-    let Time = this.TimeOut;
-    while (regreso === undefined && Time > 0) {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      Time -= 500;
-    }
-    return regreso;
+    await this.fetchCsrfToken();
+    return lastValueFrom(
+      this.http.get<T>(this.url + url, this.getHttpOptions()),
+    );
   }
+
   public async requestPOST<T>(url: string, body: any): Promise<T> {
-    let regreso!: Promise<T>;
-    let Time = this.TimeOut;
-    this.http.get<T>(this.urlToken).subscribe(() => {
-      regreso = lastValueFrom(this.http.post<T>(this.url + url, body));
-    });
-    while (regreso === undefined) {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      Time -= 500;
-    }
-    return regreso;
+    await this.fetchCsrfToken();
+    return lastValueFrom(
+      this.http.post<T>(this.url + url, body, this.getHttpOptions()),
+    );
   }
+
+  // ... métodos para PUT, DELETE, etc., también con withCredentials
 }
