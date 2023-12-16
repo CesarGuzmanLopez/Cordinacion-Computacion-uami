@@ -29,7 +29,6 @@ export class AppSessionService {
 
   public async isAuthenticated(): Promise<boolean> {
     await this.loadAppSessionFromPreferences();
-    console.log(this.appSession);
     return this.appSession?.rol !== Rol.Invitado && !!this.appSession?.token;
   }
 
@@ -90,11 +89,14 @@ export class AppSessionService {
   }
 
   private async loadAppSessionFromPreferences() {
-    await Preferences.get({ key: 'appSession' }).then((result) => {
+    await Preferences.get({ key: 'appSession' }).then(async (result) => {
       if (result.value) {
         this.appSession = JSON.parse(result.value);
         this.http.updateAuthToken(this.appSession?.token ?? '');
         this.updateAuthStatus(); // Actualiza el estado de autenticación
+      } else {
+        this.appSession = await this.http.requestGET<AppSession>('/login');
+        this.http.updateAuthToken(this.appSession?.token ?? '');
       }
     });
   }

@@ -22,9 +22,7 @@ export class HttpBack {
 
   // Genera las opciones HTTP, incluyendo el token de autorización si está disponible
   private getHttpOptions() {
-    let headers = new HttpHeaders({
-      // ... cualquier otra cabecera que necesites
-    });
+    let headers = new HttpHeaders({});
 
     if (this.authToken) {
       headers = headers.append('Authorization', `Bearer ${this.authToken}`);
@@ -43,6 +41,7 @@ export class HttpBack {
 
   public async requestGET<T>(url: string): Promise<T> {
     await this.fetchCsrfToken();
+
     return lastValueFrom(
       this.http.get<T>(this.url + url, this.getHttpOptions()),
     );
@@ -54,6 +53,23 @@ export class HttpBack {
       this.http.post<T>(this.url + url, body, this.getHttpOptions()),
     );
   }
+  public async requestPUT<T>(url: string, body: any): Promise<T> {
+    await this.fetchCsrfToken();
+    return lastValueFrom(
+      this.http.put<T>(this.url + url, body, this.getHttpOptions()),
+    );
+  }
+  public async requestDELETE<T>(url: string): Promise<T> {
+    await this.fetchCsrfToken();
+    return lastValueFrom(
+      this.http.delete<T>(this.url + url, this.getHttpOptions()),
+    );
+  }
 
-  // ... métodos para PUT, DELETE, etc., también con withCredentials
+  public async requestPATCH<T>(url: string, body: any): Promise<T> {
+    await this.fetchCsrfToken();
+    return lastValueFrom(
+      this.http.patch<T>(this.url + url, body, this.getHttpOptions()),
+    );
+  }
 }
