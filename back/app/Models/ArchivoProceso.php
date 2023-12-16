@@ -12,13 +12,13 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class ArchivoProceso
  * 
- * @property int $archivo_id
- * @property int $proceso_id
+ * @property int $tipo_archivo_id
+ * @property int $tipo_proceso_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Archivo $archivo
- * @property Proceso $proceso
+ * @property TiposArchivo $tipos_archivo
+ * @property TipoProceso $tipo_proceso
  *
  * @package App\Models
  */
@@ -28,17 +28,17 @@ class ArchivoProceso extends Model
 	public $incrementing = false;
 
 	protected $casts = [
-		'archivo_id' => 'int',
-		'proceso_id' => 'int'
+		'tipo_archivo_id' => 'int',
+		'tipo_proceso_id' => 'int'
 	];
 
-	public function archivo()
+	public function tipos_archivo()
 	{
-		return $this->belongsTo(Archivo::class);
+		return $this->belongsTo(TiposArchivo::class, 'tipo_archivo_id');
 	}
 
-	public function proceso()
+	public function tipo_proceso()
 	{
-		return $this->belongsTo(Proceso::class);
+		return $this->belongsTo(TipoProceso::class);
 	}
 }

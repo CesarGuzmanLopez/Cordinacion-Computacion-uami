@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,26 +10,28 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //tipos de archivos del proceso
-        //ejemplo carta de aceptacion de servicio social
-        Schema::create('Tipos_archivo', function (Blueprint $table) {
+        // Tipos de archivos del proceso
+        // Ejemplo carta de aceptación de servicio social
+        Schema::create('tipos_archivo', function (Blueprint $table) {
             $table->id();
             $table->string('nombre')->unique();
             $table->timestamps();
         });
-        //tipo de proceso por ejemplo servicio social
-        Schema::create('Tipo_proceso', function (Blueprint $table) {
+
+        // Tipo de proceso por ejemplo servicio social
+        Schema::create('tipo_proceso', function (Blueprint $table) {
             $table->id();
             $table->string('nombre')->unique();
-            //tiempo que dura el proceso en dias
+            // Tiempo que dura el proceso en días
             $table->integer('tiempo');
             $table->timestamps();
         });
-        //procesos por ejemplo servicio social
-        //el usuario que crea la solicitud puede ser un alumno o un profesor
+
+        // Procesos por ejemplo servicio social
+        // El usuario que crea la solicitud puede ser un alumno o un profesor
         Schema::create('procesos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('usuario_id')->nullable();//id del alumno interesado
+            $table->unsignedBigInteger('usuario_id')->nullable(); // Id del alumno interesado
             $table->unsignedBigInteger('tipo_proceso_id');
             $table->date('fecha_inicio');
             $table->date('fecha_termino');
@@ -38,7 +39,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        //archivos subidos por el usuario
+        // Archivos subidos por el usuario
         Schema::create('archivos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('usuario_id');
@@ -53,8 +54,9 @@ return new class extends Migration
             $table->foreign('tipo_id')->references('id')->on('tipos_archivo')->onDelete('restrict');
             $table->foreign('proceso_id')->references('id')->on('procesos')->onDelete('set null');
         });
-        //Estado de verificacion del archivo por los usuarios que deben verificarlo
-        //estos usuarios pueden ser profesores cordinadores y administradores
+
+        // Estado de verificación del archivo por los usuarios que deben verificarlo
+        // Estos usuarios pueden ser profesores coordinadores y administradores
         Schema::create('archivo_usuario_verificador', function (Blueprint $table) {
             $table->unsignedBigInteger('archivo_id');
             $table->unsignedBigInteger('usuario_verificador_id');
@@ -65,17 +67,15 @@ return new class extends Migration
             $table->foreign('usuario_verificador_id')->references('id')->on('users')->onDelete('cascade');
         });
 
-
-        //archivos necesaios por procesos relacion Tipo_archivo y Tipo_proceso
+        // Archivos necesarios por procesos relacion Tipo_archivo y Tipo_proceso
         Schema::create('archivo_proceso', function (Blueprint $table) {
             $table->unsignedBigInteger('tipo_archivo_id');
             $table->unsignedBigInteger('tipo_proceso_id');
             $table->timestamps();
             $table->primary(['tipo_archivo_id', 'tipo_proceso_id']);
             $table->foreign('tipo_archivo_id')->references('id')->on('tipos_archivo')->onDelete('cascade');
-            $table->foreign('tipo_proceso_id')->references('id')->on('Tipo_proceso')->onDelete('cascade');
+            $table->foreign('tipo_proceso_id')->references('id')->on('tipo_proceso')->onDelete('cascade');
         });
-
     }
 
     /**
@@ -87,7 +87,8 @@ return new class extends Migration
         Schema::dropIfExists('archivo_usuario_verificador');
         Schema::dropIfExists('archivos');
         Schema::dropIfExists('procesos');
-        Schema::dropIfExists('Tipo_proceso');
+        Schema::dropIfExists('tipo_proceso');
         Schema::dropIfExists('tipos_archivo');
     }
 };
+

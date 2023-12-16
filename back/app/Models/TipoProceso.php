@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -17,12 +18,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $tiempo
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * 
+ * @property Collection|ArchivoProceso[] $archivo_procesos
  *
  * @package App\Models
  */
 class TipoProceso extends Model
 {
-	protected $table = 'Tipo_proceso';
+	protected $table = 'tipo_proceso';
 
 	protected $casts = [
 		'tiempo' => 'int'
@@ -32,4 +35,9 @@ class TipoProceso extends Model
 		'nombre',
 		'tiempo'
 	];
+
+	public function archivo_procesos()
+	{
+		return $this->hasMany(ArchivoProceso::class);
+	}
 }
